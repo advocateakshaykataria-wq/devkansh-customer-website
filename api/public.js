@@ -1,0 +1,2 @@
+const {readDB,send}=require("./_lib");
+module.exports=async(req,res)=>{if(req.method!=="GET")return send(res,405,{error:"Method not allowed"});try{const d=await readDB();const clients=(d.clients||[]).map(c=>({id:c.id,clientId:c.clientId,name:c.name,files:c.files,projects:c.projects,publicGallery:c.publicGallery}));return send(res,200,{clients,products:d.products||[],referenceDesigns:d.referenceDesigns||[],videoUsers:d.videoUsers||[],videoPosts:d.videoPosts||[],videos:d.videos||[]})}catch(e){return send(res,500,{error:e.message})}};
